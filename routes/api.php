@@ -13,3 +13,7 @@ Route::controller(AuthController::class)->group(function(){
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('products', App\Http\Controllers\API\ProductController::class);
+});
