@@ -33,6 +33,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    // The password and remember tokens are hidden when the model is converted to an array or JSON.
+
 
     /**
      * Get the attributes that should be cast.
@@ -45,5 +47,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function edit(Request $request, Contact $contact)
+    {
+        if (!$request->user()->can('update-contact', $contact)){
+            abort(403);
+        }
+
+        return view('contacts.edit', ['contact' => $contact]);
     }
 }
